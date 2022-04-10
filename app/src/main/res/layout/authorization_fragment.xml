@@ -28,7 +28,7 @@
             app:startIconDrawable="@drawable/ic_sharp_person_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
-
+                android:id="@+id/text_view_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -46,6 +46,7 @@
             tools:layout_editor_absoluteX="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_view_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -64,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_password" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_login"
+            android:id="@+id/button_sig_in"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +84,7 @@
             android:text="@string/registration_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_login" />
+            app:layout_constraintTop_toBottomOf="@+id/button_sig_in" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,6 +92,7 @@
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
 </FrameLayout>

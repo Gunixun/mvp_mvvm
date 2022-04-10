@@ -3,7 +3,7 @@ package com.example.mvp_mvvm.model
 import androidx.room.*
 
 @Dao
-interface AccountDAO {
+interface AccountsDAO {
     @Insert
     fun registration(vararg user: AccountEntity)
 

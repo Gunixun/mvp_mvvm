@@ -2,7 +2,7 @@ package com.example.mvp_mvvm.ui
 
 import android.app.Application
 import androidx.room.Room
-import com.example.mvp_mvvm.model.AccountDAO
+import com.example.mvp_mvvm.model.AccountsDAO
 import com.example.mvp_mvvm.model.AccountsDB
 
 class App: Application() {
@@ -16,7 +16,7 @@ class App: Application() {
         private var instance: App? = null
         private var db: AccountsDB? = null
 
-        fun getHistoryDao(): AccountDAO {
+        fun getAccountDao(): AccountsDAO {
             if (db == null) {
                 synchronized(AccountsDB::class.java) {
                     if (db == null) {
