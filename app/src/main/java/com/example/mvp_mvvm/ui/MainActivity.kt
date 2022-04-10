@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.ui.authorization.AuthorizationFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationActivity{
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigationTo(f: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, f).commit()
+    override fun navigationTo(fragment: Fragment, withTransaction: Boolean) {
+        val transaction = supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+
+        if (withTransaction) {
+            transaction.addToBackStack("Transaction")
+        }
+
+        transaction.commit()
+
     }
 
     private fun setHomePage(){
