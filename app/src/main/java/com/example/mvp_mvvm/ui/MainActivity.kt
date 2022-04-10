@@ -23,8 +23,14 @@ class MainActivity : AppCompatActivity(), NavigationActivity{
 
     override fun navigationTo(fragment: Fragment, withTransaction: Boolean) {
         val transaction = supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, fragment)
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.push_up_out,
+                R.anim.push_up_in,
+                R.anim.slide_out
+            )
+            .replace(R.id.container, fragment)
 
         if (withTransaction) {
             transaction.addToBackStack("Transaction")
