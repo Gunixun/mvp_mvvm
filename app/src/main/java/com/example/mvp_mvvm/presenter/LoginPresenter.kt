@@ -1,5 +1,6 @@
 package com.example.mvp_mvvm.presenter
 
+import com.example.mvp_mvvm.contract.LoginContract
 import com.example.mvp_mvvm.model.AccountData
 import com.example.mvp_mvvm.repository.ILoginRepository
 import com.example.mvp_mvvm.repository.RoomLoginRepository

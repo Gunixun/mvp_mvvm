@@ -1,4 +1,4 @@
-package com.example.mvp_mvvm.presenter
+package com.example.mvp_mvvm.contract
 
 import com.example.mvp_mvvm.model.AccountData
 import java.lang.Exception

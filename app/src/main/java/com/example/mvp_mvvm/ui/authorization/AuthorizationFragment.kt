@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.databinding.AuthorizationFragmentBinding
 import com.example.mvp_mvvm.model.AccountData
-import com.example.mvp_mvvm.presenter.LoginContract
+import com.example.mvp_mvvm.contract.LoginContract
 import com.example.mvp_mvvm.presenter.LoginPresenter
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
@@ -42,9 +42,10 @@ class AuthorizationFragment :
         }
 
         binding.buttonSigIn.setOnClickListener {
-            val login = binding.textViewLogin.text.toString()
-            val password = binding.textViewPassword.text.toString()
-            presenter.onAuthorization(login, password)
+            presenter.onAuthorization(
+                binding.textViewLogin.text.toString(),
+                binding.textViewPassword.text.toString()
+            )
         }
     }
 
@@ -69,7 +70,11 @@ class AuthorizationFragment :
     }
 
     override fun showError(error: Exception) {
-        Toast.makeText(context, getString(R.string.success_sig_in), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context,
+            getString(R.string.unexpected_error_occurred) + error.toString(),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun loadAccountData(account: AccountData) {

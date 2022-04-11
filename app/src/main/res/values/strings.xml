@@ -8,7 +8,11 @@
     <string name="create_text">Создать аккаунт</string>
     <string name="registration_text">Зарегистрироваться</string>
     <string name="error_sig_in">Неверный логин или пароль!</string>
+    <string name="error_registration">Пользователь с таким имененм или почтой уже существует</string>
     <string name="error_login_empty">Логин не может быть пустым</string>
     <string name="error_password_empty">Пароль не может быть пустым</string>
-    <string name="success_sig_in">Активация прошла успешно</string>
+    <string name="error_email_empty">Email не может быть пустым</string>
+    <string name="success_sig_in">Авторизация прошла успешно</string>
+    <string name="success_registration">Регистрация прошла успешно</string>
+    <string name="unexpected_error_occurred">Непредвиденная ошибка</string>
 </resources>

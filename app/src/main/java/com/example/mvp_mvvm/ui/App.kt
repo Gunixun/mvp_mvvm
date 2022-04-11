@@ -25,10 +25,8 @@ class App: Application() {
                         db = Room.databaseBuilder(
                             instance!!.applicationContext,
                             AccountsDB::class.java,
-                            "History.db"
-                        )
-                            .fallbackToDestructiveMigration()
-                            .build()
+                            "Accounts.db"
+                        ).build()
                     }
                 }
             }

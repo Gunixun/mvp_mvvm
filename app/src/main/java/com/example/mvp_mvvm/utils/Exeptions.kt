@@ -8,3 +8,9 @@ class LoginException: Exception() {
 
 class PasswordException: Exception() {
 }
+
+class EmailException: Exception() {
+}
+
+class RegistrationException: Exception() {
+}
