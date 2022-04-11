@@ -35,7 +35,7 @@ class RegistrationPresenter : RegistrationContract.RegistrationPresenterInterfac
                 } else if (error is LoginException) {
                     view?.showLoginError()
                 } else if (error is EmailException) {
-                    view?.showLoginError()
+                    view?.showEmailError()
                 } else {
                     view?.showError(error)
                 }

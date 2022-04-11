@@ -11,7 +11,8 @@ import com.example.mvp_mvvm.contract.LoginContract
 import com.example.mvp_mvvm.presenter.LoginPresenter
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
-import com.example.mvp_mvvm.ui.registration_fragment.RegistrationFragment
+import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
+import com.example.mvp_mvvm.ui.registration.RegistrationFragment
 import java.lang.Exception
 
 class AuthorizationFragment :
@@ -33,6 +34,15 @@ class AuthorizationFragment :
     }
 
     private fun connectSignals() {
+
+        binding.buttonForgotPassword.setOnClickListener {
+            activity?.let {
+                if (it is NavigationActivity) {
+                    it.navigationTo(ForgetPasswordFragment.newInstance(), true)
+                }
+            }
+        }
+
         binding.buttonRegistration.setOnClickListener {
             activity?.let {
                 if (it is NavigationActivity) {

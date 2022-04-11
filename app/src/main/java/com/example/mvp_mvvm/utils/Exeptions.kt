@@ -14,3 +14,6 @@ class EmailException: Exception() {
 
 class RegistrationException: Exception() {
 }
+
+class ForgetPasswordException: Exception() {
+}

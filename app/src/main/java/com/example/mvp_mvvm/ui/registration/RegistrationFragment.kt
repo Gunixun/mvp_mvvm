@@ -1,4 +1,4 @@
-package com.example.mvp_mvvm.ui.registration_fragment
+package com.example.mvp_mvvm.ui.registration
 
 import android.os.Bundle
 import android.view.View
