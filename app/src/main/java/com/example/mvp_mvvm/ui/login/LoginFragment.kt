@@ -1,31 +1,36 @@
-package com.example.mvp_mvvm.ui.authorization
+package com.example.mvp_mvvm.ui.login
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
-import com.example.mvp_mvvm.databinding.FragmentAuthorizationBinding
+import com.example.mvp_mvvm.databinding.FragmentLoginBinding
 import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
 import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
 import com.example.mvp_mvvm.ui.registration.RegistrationFragment
+import com.example.mvp_mvvm.utils.LoginException
+import com.example.mvp_mvvm.utils.PasswordException
+import com.example.mvp_mvvm.utils.SingInException
+import com.example.mvp_mvvm.app
 
-class AuthorizationFragment :
-    BaseFragment<FragmentAuthorizationBinding>(FragmentAuthorizationBinding::inflate),
+class LoginFragment :
+    BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate),
     LoginContract.LoginViewInterface {
 
-    private val presenter: LoginContract.LoginPresenterInterface = LoginPresenter()
+    private var presenter: LoginContract.LoginPresenterInterface? = null
 
     companion object {
-        fun newInstance() = AuthorizationFragment()
+        fun newInstance() = LoginFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.onAttachView(this)
+        presenter = activity?.app?.let { LoginPresenter(it.loginUseCase) }
+        presenter?.onAttachView(this)
 
         connectSignals()
     }
@@ -49,7 +54,7 @@ class AuthorizationFragment :
         }
 
         binding.buttonSigIn.setOnClickListener {
-            presenter.onAuthorization(
+            presenter?.onLogin(
                 binding.textViewLogin.text.toString(),
                 binding.textViewPassword.text.toString()
             )
@@ -57,31 +62,29 @@ class AuthorizationFragment :
     }
 
     override fun showProgress() {
-        binding.progress.isVisible= true
+        binding.progress.isVisible = true
     }
 
     override fun hideProgress() {
         binding.progress.isVisible = false
     }
 
-    override fun showLoginError() {
-        Toast.makeText(context, getString(R.string.error_login_empty), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showPasswordException() {
-        Toast.makeText(context, getString(R.string.error_password_empty), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showSigInException() {
-        Toast.makeText(context, getString(R.string.error_sig_in), Toast.LENGTH_SHORT).show()
-    }
-
     override fun showError(error: Exception) {
-        Toast.makeText(
-            context,
-            getString(R.string.unexpected_error_occurred) + error.toString(),
-            Toast.LENGTH_SHORT
-        ).show()
+        val text = when (error) {
+            is SingInException -> {
+                getString(R.string.error_sig_in)
+            }
+            is PasswordException -> {
+                getString(R.string.error_password_empty)
+            }
+            is LoginException -> {
+                getString(R.string.error_login_empty)
+            }
+            else -> {
+                getString(R.string.unexpected_error_occurred) + error.toString()
+            }
+        }
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun loadAccountData(account: AccountData) {

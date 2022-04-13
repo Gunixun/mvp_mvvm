@@ -6,8 +6,6 @@ class ForgetPasswordContract {
     interface ForgetPasswordViewInterface {
         fun showProgress()
         fun hideProgress()
-        fun showEmailError()
-        fun showForgetPasswordException()
         fun showError(error: Exception)
         fun forgetPasswordData(account: AccountData)
     }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.databinding.ActivityMainBinding
-import com.example.mvp_mvvm.ui.authorization.AuthorizationFragment
+import com.example.mvp_mvvm.ui.login.LoginFragment
 
 class MainActivity : AppCompatActivity(), NavigationActivity{
     private lateinit var binding: ActivityMainBinding
@@ -41,6 +41,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity{
     }
 
     private fun setHomePage(){
-        navigationTo(AuthorizationFragment.newInstance())
+        navigationTo(LoginFragment.newInstance())
     }
 }

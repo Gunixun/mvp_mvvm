@@ -5,16 +5,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
+import com.example.mvp_mvvm.app
 import com.example.mvp_mvvm.databinding.FragmentForgetPasswordBinding
 import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.ui.BaseFragment
+import com.example.mvp_mvvm.utils.*
 
 class ForgetPasswordFragment :
     BaseFragment<FragmentForgetPasswordBinding>(FragmentForgetPasswordBinding::inflate),
     ForgetPasswordContract.ForgetPasswordViewInterface {
 
-    private val presenter: ForgetPasswordContract.ForgetPasswordPresenterInterface =
-        ForgetPasswordPresenter()
+    private var presenter: ForgetPasswordContract.ForgetPasswordPresenterInterface? = null
+
 
     companion object {
         fun newInstance() = ForgetPasswordFragment()
@@ -23,37 +25,37 @@ class ForgetPasswordFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.onAttachView(this)
+        presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordUseCase) }
+        presenter?.onAttachView(this)
 
         binding.buttonRestore.setOnClickListener {
-            presenter.findAccount(
+            presenter?.findAccount(
                 binding.textViewEmail.text.toString()
             )
         }
     }
 
     override fun showProgress() {
-        binding.progress.isVisible= true
+        binding.progress.isVisible = true
     }
 
     override fun hideProgress() {
         binding.progress.isVisible = false
     }
 
-    override fun showEmailError() {
-        Toast.makeText(context, getString(R.string.error_email_empty), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showForgetPasswordException() {
-        Toast.makeText(context, getString(R.string.error_forget_password), Toast.LENGTH_SHORT).show()
-    }
-
     override fun showError(error: Exception) {
-        Toast.makeText(
-            context,
-            getString(R.string.unexpected_error_occurred) + error.toString(),
-            Toast.LENGTH_SHORT
-        ).show()
+        val text = when (error) {
+            is ForgetPasswordException -> {
+                getString(R.string.error_forget_password)
+            }
+            is EmailException -> {
+                getString(R.string.error_email_empty)
+            }
+            else -> {
+                getString(R.string.unexpected_error_occurred) + error.toString()
+            }
+        }
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun forgetPasswordData(account: AccountData) {

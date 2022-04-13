@@ -6,10 +6,6 @@ class RegistrationContract {
     interface RegistrationViewInterface {
         fun showProgress()
         fun hideProgress()
-        fun showRegistrationException()
-        fun showPasswordException()
-        fun showLoginError()
-        fun showEmailError()
         fun showError(error: Exception)
         fun loadAccountData(account: AccountData)
     }

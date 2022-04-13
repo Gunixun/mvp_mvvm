@@ -1,14 +1,11 @@
 package com.example.mvp_mvvm.domain
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface AccountsDAO {
-    @Insert
-    fun registration(vararg user: AccountEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun registration(entity: AccountEntity)
 
     @Update
     fun updateAccount(user: AccountEntity)
