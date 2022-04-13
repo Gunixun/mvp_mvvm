@@ -5,12 +5,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
-import com.example.mvp_mvvm.contract.ForgetPasswordContract
 import com.example.mvp_mvvm.databinding.ForgetPasswordPasswordBinding
-import com.example.mvp_mvvm.model.AccountData
-import com.example.mvp_mvvm.presenter.ForgetPasswordPresenter
+import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.ui.BaseFragment
-import java.lang.Exception
 
 class ForgetPasswordFragment :
     BaseFragment<ForgetPasswordPasswordBinding>(ForgetPasswordPasswordBinding::inflate),

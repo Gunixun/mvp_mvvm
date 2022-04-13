@@ -1,9 +1,12 @@
-package com.example.mvp_mvvm.model
+package com.example.mvp_mvvm.domain
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 
 @Dao
-interface AccountsDAO {
+interface AccountDAO {
     @Insert
     fun registration(vararg user: AccountEntity)
 

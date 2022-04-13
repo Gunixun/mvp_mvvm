@@ -2,9 +2,9 @@ package com.example.mvp_mvvm.repository
 
 import android.os.Handler
 import android.os.Looper
-import com.example.mvp_mvvm.model.AccountData
-import com.example.mvp_mvvm.model.AccountEntity
-import com.example.mvp_mvvm.model.AccountsDAO
+import com.example.mvp_mvvm.domain.AccountData
+import com.example.mvp_mvvm.domain.AccountEntity
+import com.example.mvp_mvvm.domain.AccountsDAO
 import com.example.mvp_mvvm.utils.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors

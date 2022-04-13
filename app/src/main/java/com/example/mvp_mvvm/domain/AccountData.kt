@@ -1,4 +1,4 @@
-package com.example.mvp_mvvm.model
+package com.example.mvp_mvvm.domain
 
 data class AccountData(
     val uid: Int?,

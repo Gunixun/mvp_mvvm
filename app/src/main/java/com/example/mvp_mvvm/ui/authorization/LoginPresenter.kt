@@ -1,10 +1,9 @@
-package com.example.mvp_mvvm.presenter
+package com.example.mvp_mvvm.ui.authorization
 
-import com.example.mvp_mvvm.contract.LoginContract
-import com.example.mvp_mvvm.model.AccountData
+import com.example.mvp_mvvm.App
+import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.repository.ILoginRepository
 import com.example.mvp_mvvm.repository.RoomLoginRepository
-import com.example.mvp_mvvm.ui.App
 import com.example.mvp_mvvm.utils.CallbackData
 import com.example.mvp_mvvm.utils.LoginException
 import com.example.mvp_mvvm.utils.PasswordException

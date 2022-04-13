@@ -1,7 +1,6 @@
-package com.example.mvp_mvvm.contract
+package com.example.mvp_mvvm.ui.authorization
 
-import com.example.mvp_mvvm.model.AccountData
-import java.lang.Exception
+import com.example.mvp_mvvm.domain.AccountData
 
 class LoginContract {
     interface LoginViewInterface {

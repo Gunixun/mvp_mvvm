@@ -1,9 +1,9 @@
-package com.example.mvp_mvvm.ui
+package com.example.mvp_mvvm
 
 import android.app.Application
 import androidx.room.Room
-import com.example.mvp_mvvm.model.AccountsDAO
-import com.example.mvp_mvvm.model.AccountsDB
+import com.example.mvp_mvvm.domain.AccountsDAO
+import com.example.mvp_mvvm.domain.AccountsDB
 
 class App: Application() {
 

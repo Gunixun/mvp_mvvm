@@ -1,11 +1,12 @@
-package com.example.mvp_mvvm.presenter
+package com.example.mvp_mvvm.ui.forget_password
 
-import com.example.mvp_mvvm.contract.ForgetPasswordContract
-import com.example.mvp_mvvm.model.AccountData
+import com.example.mvp_mvvm.App
+import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.repository.IForgetPasswordRepository
 import com.example.mvp_mvvm.repository.RoomForgetPasswordRepository
-import com.example.mvp_mvvm.ui.App
-import com.example.mvp_mvvm.utils.*
+import com.example.mvp_mvvm.utils.CallbackData
+import com.example.mvp_mvvm.utils.EmailException
+import com.example.mvp_mvvm.utils.ForgetPasswordException
 
 class ForgetPasswordPresenter : ForgetPasswordContract.ForgetPasswordPresenterInterface {
 

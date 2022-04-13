@@ -1,10 +1,9 @@
-package com.example.mvp_mvvm.presenter
+package com.example.mvp_mvvm.ui.registration
 
-import com.example.mvp_mvvm.contract.RegistrationContract
-import com.example.mvp_mvvm.model.AccountData
+import com.example.mvp_mvvm.App
+import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.repository.IRegistrationRepository
 import com.example.mvp_mvvm.repository.RoomRegistrationRepository
-import com.example.mvp_mvvm.ui.App
 import com.example.mvp_mvvm.utils.*
 
 class RegistrationPresenter : RegistrationContract.RegistrationPresenterInterface {
