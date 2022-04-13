@@ -28,9 +28,9 @@ class ForgetPasswordFragment :
         presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordUseCase) }
         presenter?.onAttachView(this)
 
-        binding.buttonRestore.setOnClickListener {
+        binding.restoreButton.setOnClickListener {
             presenter?.findAccount(
-                binding.textViewEmail.text.toString()
+                binding.emailTextView.text.toString()
             )
         }
     }

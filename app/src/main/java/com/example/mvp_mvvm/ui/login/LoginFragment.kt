@@ -37,7 +37,7 @@ class LoginFragment :
 
     private fun connectSignals() {
 
-        binding.buttonForgotPassword.setOnClickListener {
+        binding.forgetPasswordButton.setOnClickListener {
             activity?.let {
                 if (it is NavigationActivity) {
                     it.navigationTo(ForgetPasswordFragment.newInstance(), true)
@@ -45,7 +45,7 @@ class LoginFragment :
             }
         }
 
-        binding.buttonRegistration.setOnClickListener {
+        binding.registrationButton.setOnClickListener {
             activity?.let {
                 if (it is NavigationActivity) {
                     it.navigationTo(RegistrationFragment.newInstance(), true)
@@ -53,10 +53,10 @@ class LoginFragment :
             }
         }
 
-        binding.buttonSigIn.setOnClickListener {
+        binding.sigInButton.setOnClickListener {
             presenter?.onLogin(
-                binding.textViewLogin.text.toString(),
-                binding.textViewPassword.text.toString()
+                binding.loginTextView.text.toString(),
+                binding.passwordTextView.text.toString()
             )
         }
     }

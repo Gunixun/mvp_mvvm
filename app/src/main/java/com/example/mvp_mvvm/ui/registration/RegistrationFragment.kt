@@ -29,9 +29,9 @@ class RegistrationFragment :
 
         binding.buttonCreate.setOnClickListener {
             presenter?.onRegistration(
-                binding.textViewLogin.text.toString(),
-                binding.textViewPassword.text.toString(),
-                binding.textViewEmail.text.toString(),
+                binding.loginTextView.text.toString(),
+                binding.passwordTextView.text.toString(),
+                binding.emailTextView.text.toString(),
             )
         }
     }
