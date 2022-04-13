@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
-import com.example.mvp_mvvm.databinding.RegistrationFragmentBinding
+import com.example.mvp_mvvm.databinding.FragmentRegistrationBinding
 import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.ui.BaseFragment
 
 class RegistrationFragment :
-    BaseFragment<RegistrationFragmentBinding>(RegistrationFragmentBinding::inflate),
+    BaseFragment<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate),
     RegistrationContract.RegistrationViewInterface {
 
     private val presenter: RegistrationContract.RegistrationPresenterInterface = RegistrationPresenter()

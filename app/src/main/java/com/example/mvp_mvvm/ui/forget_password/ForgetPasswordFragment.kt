@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
-import com.example.mvp_mvvm.databinding.ForgetPasswordPasswordBinding
+import com.example.mvp_mvvm.databinding.FragmentForgetPasswordBinding
 import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.ui.BaseFragment
 
 class ForgetPasswordFragment :
-    BaseFragment<ForgetPasswordPasswordBinding>(ForgetPasswordPasswordBinding::inflate),
+    BaseFragment<FragmentForgetPasswordBinding>(FragmentForgetPasswordBinding::inflate),
     ForgetPasswordContract.ForgetPasswordViewInterface {
 
     private val presenter: ForgetPasswordContract.ForgetPasswordPresenterInterface =

@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
-import com.example.mvp_mvvm.databinding.AuthorizationFragmentBinding
+import com.example.mvp_mvvm.databinding.FragmentAuthorizationBinding
 import com.example.mvp_mvvm.domain.AccountData
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
@@ -13,7 +13,7 @@ import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
 import com.example.mvp_mvvm.ui.registration.RegistrationFragment
 
 class AuthorizationFragment :
-    BaseFragment<AuthorizationFragmentBinding>(AuthorizationFragmentBinding::inflate),
+    BaseFragment<FragmentAuthorizationBinding>(FragmentAuthorizationBinding::inflate),
     LoginContract.LoginViewInterface {
 
     private val presenter: LoginContract.LoginPresenterInterface = LoginPresenter()
