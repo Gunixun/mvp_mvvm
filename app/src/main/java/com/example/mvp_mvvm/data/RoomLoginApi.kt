@@ -1,14 +1,14 @@
 package com.example.mvp_mvvm.data
 
-import com.example.mvp_mvvm.domain.AccountEntity
-import com.example.mvp_mvvm.domain.AccountsDAO
+import com.example.mvp_mvvm.data.db.AccountDTO
+import com.example.mvp_mvvm.data.db.AccountsDAO
 import com.example.mvp_mvvm.domain.ILoginApi
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.utils.*
-import java.util.*
 
 class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
 
-    override fun getAllAccounts(): List<AccountEntity> = localDataSource.getAllAccountData()
+    fun getAllAccounts(): List<AccountDTO> = localDataSource.getAllAccountData()
 
     private fun checkData(login: String?, password: String?, email: String?){
         if (login != null && login.isEmpty()){
@@ -29,7 +29,7 @@ class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
         val accountsList = getAllAccounts()
         for (account in accountsList) {
             if (account.login == login && account.password == password) {
-                return account
+                return convertAccountDtoToEntity(account)
             }
         }
         throw SingInException()
@@ -43,9 +43,9 @@ class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
                 throw RegistrationException()
             }
         }
-        val newAccount = AccountEntity(uid=null, login = login, password = password, email = email)
+        val newAccount = AccountDTO(uid=null, login = login, password = password, email = email)
         localDataSource.registration(newAccount)
-        return newAccount
+        return convertAccountDtoToEntity(newAccount)
     }
 
     override fun forgotPassword(email: String) : AccountEntity {
@@ -53,7 +53,7 @@ class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
         val accountsList = getAllAccounts()
         for (account in accountsList) {
             if (account.email == email) {
-                return account
+                return convertAccountDtoToEntity(account)
             }
         }
         throw ForgetPasswordException()

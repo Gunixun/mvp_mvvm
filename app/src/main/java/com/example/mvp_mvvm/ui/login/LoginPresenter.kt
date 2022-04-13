@@ -1,6 +1,6 @@
 package com.example.mvp_mvvm.ui.login
 
-import com.example.mvp_mvvm.domain.AccountData
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.domain.usecase.ILoginUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
@@ -16,8 +16,8 @@ class LoginPresenter(
 
     override fun onLogin(login: String, password: String) {
         view?.showProgress()
-        loginUseCase.login(login, password, object : CallbackData<AccountData> {
-            override fun onSuccess(result: AccountData) {
+        loginUseCase.login(login, password, object : CallbackData<AccountEntity> {
+            override fun onSuccess(result: AccountEntity) {
                 view?.hideProgress()
                 view?.loadAccountData(result)
             }

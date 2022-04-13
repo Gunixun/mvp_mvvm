@@ -9,8 +9,8 @@ import com.example.mvp_mvvm.data.RoomLoginApi
 import com.example.mvp_mvvm.data.use_case.ForgetPasswordUseCase
 import com.example.mvp_mvvm.data.use_case.LoginUseCase
 import com.example.mvp_mvvm.data.use_case.RegistrationUseCase
-import com.example.mvp_mvvm.domain.AccountsDAO
-import com.example.mvp_mvvm.domain.AccountsDB
+import com.example.mvp_mvvm.data.db.AccountsDAO
+import com.example.mvp_mvvm.data.db.AccountsDB
 import com.example.mvp_mvvm.domain.ILoginApi
 import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
 import com.example.mvp_mvvm.domain.usecase.ILoginUseCase

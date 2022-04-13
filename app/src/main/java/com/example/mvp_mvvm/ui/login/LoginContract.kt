@@ -1,13 +1,13 @@
 package com.example.mvp_mvvm.ui.login
 
-import com.example.mvp_mvvm.domain.AccountData
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 
 class LoginContract {
     interface LoginViewInterface {
         fun showProgress()
         fun hideProgress()
         fun showError(error: Exception)
-        fun loadAccountData(account: AccountData)
+        fun loadAccountData(account: AccountEntity)
     }
 
     interface LoginPresenterInterface  {

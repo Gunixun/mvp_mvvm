@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.databinding.FragmentLoginBinding
-import com.example.mvp_mvvm.domain.AccountData
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
 import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
@@ -87,7 +87,7 @@ class LoginFragment :
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
-    override fun loadAccountData(account: AccountData) {
+    override fun loadAccountData(account: AccountEntity) {
         Toast.makeText(context, getString(R.string.success_sig_in), Toast.LENGTH_SHORT).show()
     }
 }

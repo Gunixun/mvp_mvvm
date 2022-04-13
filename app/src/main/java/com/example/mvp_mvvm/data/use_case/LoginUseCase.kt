@@ -2,11 +2,10 @@ package com.example.mvp_mvvm.data.use_case
 
 import android.os.Handler
 import androidx.annotation.MainThread
-import com.example.mvp_mvvm.domain.AccountData
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.domain.ILoginApi
 import com.example.mvp_mvvm.domain.usecase.ILoginUseCase
 import com.example.mvp_mvvm.utils.CallbackData
-import com.example.mvp_mvvm.utils.convertAccountEntityToData
 
 class LoginUseCase(
     private val api: ILoginApi,
@@ -15,13 +14,13 @@ class LoginUseCase(
     override fun login(
         login: String,
         password: String,
-        @MainThread callback: CallbackData<AccountData>
+        @MainThread callback: CallbackData<AccountEntity>
     ) {
         Thread {
             try {
                 val account = api.login(login, password)
                 uiHandler.post {
-                    callback.onSuccess(convertAccountEntityToData(account))
+                    callback.onSuccess(account)
                 }
             } catch (exc: Exception) {
                 uiHandler.post { callback.onError(exc) }

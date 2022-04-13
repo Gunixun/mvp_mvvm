@@ -1,6 +1,6 @@
 package com.example.mvp_mvvm.ui.forget_password
 
-import com.example.mvp_mvvm.domain.AccountData
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
@@ -16,8 +16,8 @@ class ForgetPasswordPresenter(
 
     override fun findAccount(email: String) {
         view?.showProgress()
-        forgetPasswordUseCase.forgetPassword(email, object : CallbackData<AccountData> {
-            override fun onSuccess(result: AccountData) {
+        forgetPasswordUseCase.forgetPassword(email, object : CallbackData<AccountEntity> {
+            override fun onSuccess(result: AccountEntity) {
                 view?.hideProgress()
                 view?.forgetPasswordData(result)
             }
