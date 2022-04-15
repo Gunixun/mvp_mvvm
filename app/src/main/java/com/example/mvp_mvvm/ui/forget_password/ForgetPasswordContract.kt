@@ -6,6 +6,7 @@ class ForgetPasswordContract {
     interface ForgetPasswordViewInterface {
         fun showProgress()
         fun hideProgress()
+        fun setSuccess()
         fun showError(error: Exception)
         fun forgetPasswordData(account: AccountEntity)
     }
@@ -13,5 +14,6 @@ class ForgetPasswordContract {
     interface ForgetPasswordPresenterInterface  {
         fun onAttachView(view: ForgetPasswordViewInterface)
         fun findAccount(email: String)
+        fun onDetach()
     }
 }

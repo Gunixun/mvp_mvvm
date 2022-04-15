@@ -6,6 +6,7 @@ class LoginContract {
     interface LoginViewInterface {
         fun showProgress()
         fun hideProgress()
+        fun setSuccess()
         fun showError(error: Exception)
         fun loadAccountData(account: AccountEntity)
     }
@@ -13,5 +14,6 @@ class LoginContract {
     interface LoginPresenterInterface  {
         fun onAttachView(view: LoginViewInterface)
         fun onLogin(login: String, password: String)
+        fun onDetach()
     }
 }

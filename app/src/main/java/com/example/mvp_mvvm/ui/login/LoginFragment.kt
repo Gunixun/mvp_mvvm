@@ -1,10 +1,12 @@
 package com.example.mvp_mvvm.ui.login
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
+import com.example.mvp_mvvm.app
 import com.example.mvp_mvvm.databinding.FragmentLoginBinding
 import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.ui.BaseFragment
@@ -14,7 +16,6 @@ import com.example.mvp_mvvm.ui.registration.RegistrationFragment
 import com.example.mvp_mvvm.utils.LoginException
 import com.example.mvp_mvvm.utils.PasswordException
 import com.example.mvp_mvvm.utils.SingInException
-import com.example.mvp_mvvm.app
 
 class LoginFragment :
     BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate),
@@ -26,12 +27,15 @@ class LoginFragment :
         fun newInstance() = LoginFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        presenter = activity?.app?.let { LoginPresenter(it.loginUseCase) }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        presenter = activity?.app?.let { LoginPresenter(it.loginUseCase) }
         presenter?.onAttachView(this)
-
         connectSignals()
     }
 
@@ -69,6 +73,10 @@ class LoginFragment :
         binding.progress.isVisible = false
     }
 
+    override fun setSuccess() {
+        binding.root.setBackgroundColor(Color.GREEN)
+    }
+
     override fun showError(error: Exception) {
         val text = when (error) {
             is SingInException -> {
@@ -85,9 +93,15 @@ class LoginFragment :
             }
         }
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        binding.root.setBackgroundColor(Color.RED)
     }
 
     override fun loadAccountData(account: AccountEntity) {
         Toast.makeText(context, getString(R.string.success_sig_in), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDetach()
     }
 }

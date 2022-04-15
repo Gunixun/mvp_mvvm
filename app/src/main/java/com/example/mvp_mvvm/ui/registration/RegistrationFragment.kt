@@ -1,5 +1,6 @@
 package com.example.mvp_mvvm.ui.registration
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -21,10 +22,15 @@ class RegistrationFragment :
         fun newInstance() = RegistrationFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        presenter = activity?.app?.let { RegistrationPresenter(it.registrationUseCase) }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = activity?.app?.let { RegistrationPresenter(it.registrationUseCase) }
         presenter?.onAttachView(this)
 
         binding.buttonCreate.setOnClickListener {
@@ -42,6 +48,10 @@ class RegistrationFragment :
 
     override fun hideProgress() {
         binding.progress.isVisible = false
+    }
+
+    override fun setSuccess() {
+        binding.root.setBackgroundColor(Color.GREEN)
     }
 
     override fun showError(error: Exception) {
@@ -63,9 +73,15 @@ class RegistrationFragment :
             }
         }
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        binding.root.setBackgroundColor(Color.RED)
     }
 
     override fun loadAccountData(account: AccountEntity) {
         Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDetach()
     }
 }

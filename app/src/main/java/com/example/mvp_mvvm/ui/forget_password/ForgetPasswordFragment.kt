@@ -1,5 +1,6 @@
 package com.example.mvp_mvvm.ui.forget_password
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -22,10 +23,15 @@ class ForgetPasswordFragment :
         fun newInstance() = ForgetPasswordFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordUseCase) }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordUseCase) }
         presenter?.onAttachView(this)
 
         binding.restoreButton.setOnClickListener {
@@ -43,6 +49,10 @@ class ForgetPasswordFragment :
         binding.progress.isVisible = false
     }
 
+    override fun setSuccess() {
+        binding.root.setBackgroundColor(Color.GREEN)
+    }
+
     override fun showError(error: Exception) {
         val text = when (error) {
             is ForgetPasswordException -> {
@@ -56,10 +66,16 @@ class ForgetPasswordFragment :
             }
         }
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        binding.root.setBackgroundColor(Color.RED)
     }
 
     override fun forgetPasswordData(account: AccountEntity) {
         Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDetach()
     }
 
 }

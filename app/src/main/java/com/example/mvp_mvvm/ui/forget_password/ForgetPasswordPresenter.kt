@@ -8,10 +8,14 @@ class ForgetPasswordPresenter(
     private val forgetPasswordUseCase: IForgetPasswordUseCase
 ) : ForgetPasswordContract.ForgetPasswordPresenterInterface {
 
+    private var isSuccess: Boolean = false
     private var view: ForgetPasswordContract.ForgetPasswordViewInterface? = null
 
     override fun onAttachView(view: ForgetPasswordContract.ForgetPasswordViewInterface) {
         this.view = view
+        if (isSuccess) {
+            view.setSuccess()
+        }
     }
 
     override fun findAccount(email: String) {
@@ -20,12 +24,18 @@ class ForgetPasswordPresenter(
             override fun onSuccess(result: AccountEntity) {
                 view?.hideProgress()
                 view?.forgetPasswordData(result)
+                isSuccess = true
             }
 
             override fun onError(error: Exception) {
                 view?.hideProgress()
                 view?.showError(error)
+                isSuccess = false
             }
         })
+    }
+
+    override fun onDetach() {
+        this.view = null
     }
 }

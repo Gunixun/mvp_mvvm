@@ -6,6 +6,7 @@ class RegistrationContract {
     interface RegistrationViewInterface {
         fun showProgress()
         fun hideProgress()
+        fun setSuccess()
         fun showError(error: Exception)
         fun loadAccountData(account: AccountEntity)
     }
@@ -13,5 +14,6 @@ class RegistrationContract {
     interface RegistrationPresenterInterface  {
         fun onAttachView(view: RegistrationViewInterface)
         fun onRegistration(login: String, password: String, email: String)
+        fun onDetach()
     }
 }
