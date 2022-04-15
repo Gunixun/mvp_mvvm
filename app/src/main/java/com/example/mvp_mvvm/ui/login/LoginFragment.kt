@@ -1,4 +1,4 @@
-package com.example.mvp_mvvm.ui.registration
+package com.example.mvp_mvvm.ui.login
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,37 +7,60 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.app
-import com.example.mvp_mvvm.databinding.FragmentRegistrationBinding
+import com.example.mvp_mvvm.databinding.FragmentLoginBinding
 import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.ui.BaseFragment
-import com.example.mvp_mvvm.utils.*
+import com.example.mvp_mvvm.ui.NavigationActivity
+import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
+import com.example.mvp_mvvm.ui.registration.RegistrationFragment
+import com.example.mvp_mvvm.utils.LoginException
+import com.example.mvp_mvvm.utils.PasswordException
+import com.example.mvp_mvvm.utils.SingInException
 
-class RegistrationFragment :
-    BaseFragment<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate),
-    RegistrationContract.RegistrationViewInterface {
+class LoginFragment :
+    BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate),
+    LoginContract.LoginViewInterface {
 
-    private var presenter: RegistrationContract.RegistrationPresenterInterface? = null
+    private var presenter: LoginContract.LoginPresenterInterface? = null
 
     companion object {
-        fun newInstance() = RegistrationFragment()
+        fun newInstance() = LoginFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        presenter = activity?.app?.let { RegistrationPresenter(it.registrationUseCase) }
+        presenter = activity?.app?.let { LoginPresenter(it.loginUseCase) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         presenter?.onAttachView(this)
+        connectSignals()
+    }
 
-        binding.buttonCreate.setOnClickListener {
-            presenter?.onRegistration(
+    private fun connectSignals() {
+
+        binding.forgetPasswordButton.setOnClickListener {
+            activity?.let {
+                if (it is NavigationActivity) {
+                    it.navigationTo(ForgetPasswordFragment.newInstance(), true)
+                }
+            }
+        }
+
+        binding.registrationButton.setOnClickListener {
+            activity?.let {
+                if (it is NavigationActivity) {
+                    it.navigationTo(RegistrationFragment.newInstance(), true)
+                }
+            }
+        }
+
+        binding.sigInButton.setOnClickListener {
+            presenter?.onLogin(
                 binding.loginTextView.text.toString(),
-                binding.passwordTextView.text.toString(),
-                binding.emailTextView.text.toString(),
+                binding.passwordTextView.text.toString()
             )
         }
     }
@@ -56,17 +79,14 @@ class RegistrationFragment :
 
     override fun showError(error: Exception) {
         val text = when (error) {
-            is RegistrationException -> {
-                getString(R.string.error_registration)
+            is SingInException -> {
+                getString(R.string.error_sig_in)
             }
             is PasswordException -> {
                 getString(R.string.error_password_empty)
             }
             is LoginException -> {
                 getString(R.string.error_login_empty)
-            }
-            is EmailException -> {
-                getString(R.string.error_email_empty)
             }
             else -> {
                 getString(R.string.unexpected_error_occurred) + error.toString()
@@ -77,7 +97,7 @@ class RegistrationFragment :
     }
 
     override fun loadAccountData(account: AccountEntity) {
-        Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.success_sig_in), Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

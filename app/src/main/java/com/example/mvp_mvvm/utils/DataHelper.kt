@@ -1,10 +1,10 @@
 package com.example.mvp_mvvm.utils
 
-import com.example.mvp_mvvm.model.AccountData
-import com.example.mvp_mvvm.model.AccountEntity
+import com.example.mvp_mvvm.data.db.AccountDTO
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 
-fun convertAccountEntityToData(account: AccountEntity):AccountData{
-    return AccountData(
+fun convertAccountDtoToEntity(account: AccountDTO): AccountEntity {
+    return AccountEntity(
         uid = account.uid,
         login = account.login,
         email = account.email

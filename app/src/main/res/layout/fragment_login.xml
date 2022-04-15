@@ -6,47 +6,47 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_login"
+        android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineLogin"
+            android:id="@+id/guide_line_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.3" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_user_name"
+            android:id="@+id/user_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_input_margin"
             android:hint="@string/user_hint"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineLogin"
-            app:layout_constraintTop_toTopOf="@+id/guidelineLogin"
+            app:layout_constraintBottom_toTopOf="@+id/guide_line_login"
+            app:layout_constraintTop_toTopOf="@+id/guide_line_login"
             app:startIconDrawable="@drawable/ic_sharp_person_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_view_login"
+                android:id="@+id/login_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_password"
+            android:id="@+id/password_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_input_margin"
             android:hint="@string/password_hint"
             app:endIconMode="password_toggle"
-            app:layout_constraintTop_toBottomOf="@+id/layout_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_layout"
             app:startIconDrawable="@drawable/ic_key_24"
             tools:layout_editor_absoluteX="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_view_password"
+                android:id="@+id/password_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -54,7 +54,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_forgot_password"
+            android:id="@+id/forget_password_button"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,10 +62,10 @@
             android:text="@string/forgot_password_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_password" />
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_sig_in"
+            android:id="@+id/sig_in_button"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,10 +73,10 @@
             android:text="@string/login_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_forgot_password" />
+            app:layout_constraintTop_toBottomOf="@+id/forget_password_button" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_registration"
+            android:id="@+id/registration_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:text="@string/registration_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_sig_in" />
+            app:layout_constraintTop_toBottomOf="@+id/sig_in_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

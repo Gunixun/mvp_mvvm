@@ -1,66 +1,81 @@
 package com.example.mvp_mvvm.ui.forget_password
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
-import com.example.mvp_mvvm.contract.ForgetPasswordContract
-import com.example.mvp_mvvm.databinding.ForgetPasswordPasswordBinding
-import com.example.mvp_mvvm.model.AccountData
-import com.example.mvp_mvvm.presenter.ForgetPasswordPresenter
+import com.example.mvp_mvvm.app
+import com.example.mvp_mvvm.databinding.FragmentForgetPasswordBinding
+import com.example.mvp_mvvm.domain.entities.AccountEntity
 import com.example.mvp_mvvm.ui.BaseFragment
-import java.lang.Exception
+import com.example.mvp_mvvm.utils.*
 
 class ForgetPasswordFragment :
-    BaseFragment<ForgetPasswordPasswordBinding>(ForgetPasswordPasswordBinding::inflate),
+    BaseFragment<FragmentForgetPasswordBinding>(FragmentForgetPasswordBinding::inflate),
     ForgetPasswordContract.ForgetPasswordViewInterface {
 
-    private val presenter: ForgetPasswordContract.ForgetPasswordPresenterInterface =
-        ForgetPasswordPresenter()
+    private var presenter: ForgetPasswordContract.ForgetPasswordPresenterInterface? = null
+
 
     companion object {
         fun newInstance() = ForgetPasswordFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordUseCase) }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.onAttachView(this)
+        presenter?.onAttachView(this)
 
-        binding.buttonRestore.setOnClickListener {
-            presenter.findAccount(
-                binding.textViewEmail.text.toString()
+        binding.restoreButton.setOnClickListener {
+            presenter?.findAccount(
+                binding.emailTextView.text.toString()
             )
         }
     }
 
     override fun showProgress() {
-        binding.progress.isVisible= true
+        binding.progress.isVisible = true
     }
 
     override fun hideProgress() {
         binding.progress.isVisible = false
     }
 
-    override fun showEmailError() {
-        Toast.makeText(context, getString(R.string.error_email_empty), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showForgetPasswordException() {
-        Toast.makeText(context, getString(R.string.error_forget_password), Toast.LENGTH_SHORT).show()
+    override fun setSuccess() {
+        binding.root.setBackgroundColor(Color.GREEN)
     }
 
     override fun showError(error: Exception) {
-        Toast.makeText(
-            context,
-            getString(R.string.unexpected_error_occurred) + error.toString(),
-            Toast.LENGTH_SHORT
-        ).show()
+        val text = when (error) {
+            is ForgetPasswordException -> {
+                getString(R.string.error_forget_password)
+            }
+            is EmailException -> {
+                getString(R.string.error_email_empty)
+            }
+            else -> {
+                getString(R.string.unexpected_error_occurred) + error.toString()
+            }
+        }
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        binding.root.setBackgroundColor(Color.RED)
     }
 
-    override fun forgetPasswordData(account: AccountData) {
+    override fun forgetPasswordData(account: AccountEntity) {
         Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDetach()
     }
 
 }

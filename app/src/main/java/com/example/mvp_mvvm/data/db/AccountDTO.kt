@@ -1,11 +1,11 @@
-package com.example.mvp_mvvm.model
+package com.example.mvp_mvvm.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class AccountEntity(
+data class AccountDTO(
     @PrimaryKey(autoGenerate = true)
     val uid: Int?,
     @ColumnInfo(name = "LOGIN")
