@@ -89,7 +89,7 @@ class ForgetPasswordFragment :
     private fun forgetPasswordData(account: Account) {
         viewState = ViewState.IS_SUCCESS
         binding.root.setBackgroundColor(Color.GREEN)
-        Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.success_forget_password), Toast.LENGTH_SHORT).show()
     }
 
     private fun restoreStateUi() {
