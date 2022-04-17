@@ -2,6 +2,8 @@ package com.example.mvp_mvvm.ui.login
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -9,6 +11,7 @@ import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.app
 import com.example.mvp_mvvm.databinding.FragmentLoginBinding
 import com.example.mvp_mvvm.domain.entities.Account
+import com.example.mvp_mvvm.ui.AppState
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
 import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
@@ -18,10 +21,9 @@ import com.example.mvp_mvvm.utils.PasswordException
 import com.example.mvp_mvvm.utils.SingInException
 
 class LoginFragment :
-    BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate),
-    LoginContract.LoginViewInterface {
+    BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-    private var presenter: LoginContract.LoginPresenterInterface? = null
+    private var viewModel: LoginContract.ViewModel? = null
 
     companion object {
         fun newInstance() = LoginFragment()
@@ -30,17 +32,18 @@ class LoginFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        presenter = activity?.app?.let { LoginPresenter(it.loginDataSource) }
+        viewModel = activity?.app?.let { LoginViewModel(it.loginDataSource) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter?.onAttachView(this)
         connectSignals()
     }
 
     private fun connectSignals() {
-
+        viewModel?.getLiveData()?.subscribe(Handler(Looper.getMainLooper())) { state ->
+            renderData(state)
+        }
         binding.forgetPasswordButton.setOnClickListener {
             activity?.let {
                 if (it is NavigationActivity) {
@@ -58,26 +61,29 @@ class LoginFragment :
         }
 
         binding.sigInButton.setOnClickListener {
-            presenter?.onLogin(
+            viewModel?.onLogin(
                 binding.loginTextView.text.toString(),
                 binding.passwordTextView.text.toString()
             )
         }
     }
 
-    override fun showProgress() {
-        binding.progress.isVisible = true
-    }
-
-    override fun hideProgress() {
+    private fun renderData(result: AppState) {
         binding.progress.isVisible = false
+        when (result) {
+            is AppState.Loading -> {
+                binding.progress.isVisible = true
+            }
+            is AppState.Success -> {
+                loadAccountData(result.account)
+            }
+            is AppState.Error -> {
+                showError(result.error)
+            }
+        }
     }
 
-    override fun setSuccess() {
-        binding.root.setBackgroundColor(Color.GREEN)
-    }
-
-    override fun showError(error: Exception) {
+    private fun showError(error: Exception) {
         val text = when (error) {
             is SingInException -> {
                 getString(R.string.error_sig_in)
@@ -96,12 +102,13 @@ class LoginFragment :
         binding.root.setBackgroundColor(Color.RED)
     }
 
-    override fun loadAccountData(account: Account) {
+    private fun loadAccountData(account: Account) {
+        binding.root.setBackgroundColor(Color.GREEN)
         Toast.makeText(context, getString(R.string.success_sig_in), Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter?.onDetach()
+        viewModel?.getLiveData()?.unsubscribeAll()
     }
 }

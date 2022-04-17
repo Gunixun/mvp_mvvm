@@ -2,31 +2,29 @@ package com.example.mvp_mvvm
 
 import android.app.Application
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import androidx.room.Room
 import com.example.mvp_mvvm.data.RoomLoginApi
-import com.example.mvp_mvvm.data.use_case.ForgetPasswordDataSource
-import com.example.mvp_mvvm.data.use_case.LoginDataSource
-import com.example.mvp_mvvm.data.use_case.RegistrationDataSource
+import com.example.mvp_mvvm.data.use_cases.ForgetPasswordDataSource
+import com.example.mvp_mvvm.data.use_cases.LoginDataSource
+import com.example.mvp_mvvm.data.use_cases.RegistrationDataSource
 import com.example.mvp_mvvm.data.db.AccountsDao
 import com.example.mvp_mvvm.data.db.AccountsDb
 import com.example.mvp_mvvm.domain.ILoginApi
-import com.example.mvp_mvvm.domain.usecase.ForgetPasswordUseCase
-import com.example.mvp_mvvm.domain.usecase.LoginUseCase
-import com.example.mvp_mvvm.domain.usecase.RegistrationUseCase
+import com.example.mvp_mvvm.domain.use_cases.ForgetPasswordUseCase
+import com.example.mvp_mvvm.domain.use_cases.LoginUseCase
+import com.example.mvp_mvvm.domain.use_cases.RegistrationUseCase
 
 class App : Application() {
     private val loginApi: ILoginApi by lazy { RoomLoginApi(getAccountDao()) }
 
     val loginDataSource: LoginUseCase by lazy {
-        LoginDataSource(app.loginApi, Handler(Looper.getMainLooper()))
+        LoginDataSource(app.loginApi)
     }
     val registrationDataSource: RegistrationUseCase by lazy {
-        RegistrationDataSource(app.loginApi, Handler(Looper.getMainLooper()))
+        RegistrationDataSource(app.loginApi)
     }
     val forgetPasswordDataSource: ForgetPasswordUseCase by lazy {
-        ForgetPasswordDataSource(app.loginApi, Handler(Looper.getMainLooper()))
+        ForgetPasswordDataSource(app.loginApi)
     }
 
     override fun onCreate() {
