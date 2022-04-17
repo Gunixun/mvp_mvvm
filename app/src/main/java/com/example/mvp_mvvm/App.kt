@@ -9,8 +9,8 @@ import com.example.mvp_mvvm.data.RoomLoginApi
 import com.example.mvp_mvvm.data.use_case.ForgetPasswordUseCase
 import com.example.mvp_mvvm.data.use_case.LoginUseCase
 import com.example.mvp_mvvm.data.use_case.RegistrationUseCase
-import com.example.mvp_mvvm.data.db.AccountsDAO
-import com.example.mvp_mvvm.data.db.AccountsDB
+import com.example.mvp_mvvm.data.db.AccountsDao
+import com.example.mvp_mvvm.data.db.AccountsDb
 import com.example.mvp_mvvm.domain.ILoginApi
 import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
 import com.example.mvp_mvvm.domain.usecase.ILoginUseCase
@@ -31,13 +31,16 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        db = Room.databaseBuilder(this, AccountsDB::class.java, "Accounts.db").build()
+        db = Room
+            .databaseBuilder(this, AccountsDb::class.java, "Accounts.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     companion object {
-        private var db: AccountsDB? = null
+        private var db: AccountsDb? = null
 
-        fun getAccountDao(): AccountsDAO {
+        fun getAccountDao(): AccountsDao {
             return db!!.accountDao()
         }
     }
