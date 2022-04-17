@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.app
 import com.example.mvp_mvvm.databinding.FragmentRegistrationBinding
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.utils.*
 
@@ -76,7 +76,7 @@ class RegistrationFragment :
         binding.root.setBackgroundColor(Color.RED)
     }
 
-    override fun loadAccountData(account: AccountEntity) {
+    override fun loadAccountData(account: Account) {
         Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
     }
 

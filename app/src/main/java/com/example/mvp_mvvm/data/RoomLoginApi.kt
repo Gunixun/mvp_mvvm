@@ -1,14 +1,14 @@
 package com.example.mvp_mvvm.data
 
-import com.example.mvp_mvvm.data.db.AccountDTO
-import com.example.mvp_mvvm.data.db.AccountsDAO
+import com.example.mvp_mvvm.data.db.AccountEntity
+import com.example.mvp_mvvm.data.db.AccountsDao
 import com.example.mvp_mvvm.domain.ILoginApi
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.utils.*
 
-class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
+class RoomLoginApi(private val localDataSource: AccountsDao) : ILoginApi {
 
-    fun getAllAccounts(): List<AccountDTO> = localDataSource.getAllAccountData()
+    fun getAllAccounts(): List<AccountEntity> = localDataSource.getAllAccountData()
 
     private fun checkData(login: String?, password: String?, email: String?){
         if (login != null && login.isEmpty()){
@@ -24,7 +24,7 @@ class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
         }
     }
 
-    override fun login(login: String, password: String) : AccountEntity {
+    override fun login(login: String, password: String) : Account {
         checkData(login, password, null)
         val accountsList = getAllAccounts()
         for (account in accountsList) {
@@ -35,7 +35,7 @@ class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
         throw SingInException()
     }
 
-    override fun register(login: String, password: String, email: String) : AccountEntity {
+    override fun register(login: String, password: String, email: String) : Account {
         checkData(login, password, null)
         val accountsList = getAllAccounts()
         for (account in accountsList) {
@@ -43,12 +43,12 @@ class RoomLoginApi(private val localDataSource: AccountsDAO) : ILoginApi {
                 throw RegistrationException()
             }
         }
-        val newAccount = AccountDTO(uid=null, login = login, password = password, email = email)
+        val newAccount = AccountEntity(uid=null, login = login, password = password, email = email)
         localDataSource.registration(newAccount)
         return convertAccountDtoToEntity(newAccount)
     }
 
-    override fun forgotPassword(email: String) : AccountEntity {
+    override fun forgotPassword(email: String) : Account {
         checkData(null, null, email)
         val accountsList = getAllAccounts()
         for (account in accountsList) {

@@ -1,6 +1,6 @@
 package com.example.mvp_mvvm.ui.registration
 
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.domain.usecase.IRegistrationUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
@@ -20,8 +20,8 @@ class RegistrationPresenter(
 
     override fun onRegistration(login: String, password: String, email: String) {
         view?.showProgress()
-        registrationUseCase.register(login, password, email, object : CallbackData<AccountEntity> {
-            override fun onSuccess(result: AccountEntity) {
+        registrationUseCase.register(login, password, email, object : CallbackData<Account> {
+            override fun onSuccess(result: Account) {
                 view?.hideProgress()
                 view?.loadAccountData(result)
                 view?.setSuccess()

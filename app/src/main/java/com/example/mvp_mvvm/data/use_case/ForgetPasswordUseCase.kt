@@ -2,7 +2,7 @@ package com.example.mvp_mvvm.data.use_case
 
 import android.os.Handler
 import androidx.annotation.MainThread
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.domain.ILoginApi
 import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
 import com.example.mvp_mvvm.utils.CallbackData
@@ -14,7 +14,7 @@ class ForgetPasswordUseCase(
 
     override fun forgetPassword(
         email: String,
-        @MainThread callback: CallbackData<AccountEntity>
+        @MainThread callback: CallbackData<Account>
     ) {
         Thread {
             try {

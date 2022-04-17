@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.app
 import com.example.mvp_mvvm.databinding.FragmentLoginBinding
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.ui.BaseFragment
 import com.example.mvp_mvvm.ui.NavigationActivity
 import com.example.mvp_mvvm.ui.forget_password.ForgetPasswordFragment
@@ -96,7 +96,7 @@ class LoginFragment :
         binding.root.setBackgroundColor(Color.RED)
     }
 
-    override fun loadAccountData(account: AccountEntity) {
+    override fun loadAccountData(account: Account) {
         Toast.makeText(context, getString(R.string.success_sig_in), Toast.LENGTH_SHORT).show()
     }
 

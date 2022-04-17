@@ -1,6 +1,6 @@
 package com.example.mvp_mvvm.ui.forget_password
 
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
 
 class ForgetPasswordContract {
     interface ForgetPasswordViewInterface {
@@ -8,7 +8,7 @@ class ForgetPasswordContract {
         fun hideProgress()
         fun setSuccess()
         fun showError(error: Exception)
-        fun forgetPasswordData(account: AccountEntity)
+        fun forgetPasswordData(account: Account)
     }
 
     interface ForgetPasswordPresenterInterface  {
