@@ -25,7 +25,7 @@ class RegistrationFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        presenter = activity?.app?.let { RegistrationPresenter(it.registrationUseCase) }
+        presenter = activity?.app?.let { RegistrationPresenter(it.registrationDataSource) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

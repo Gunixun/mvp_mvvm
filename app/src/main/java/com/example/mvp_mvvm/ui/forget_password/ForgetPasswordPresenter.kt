@@ -1,11 +1,11 @@
 package com.example.mvp_mvvm.ui.forget_password
 
 import com.example.mvp_mvvm.domain.entities.Account
-import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
+import com.example.mvp_mvvm.domain.usecase.ForgetPasswordUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
 class ForgetPasswordPresenter(
-    private val forgetPasswordUseCase: IForgetPasswordUseCase
+    private val forgetPasswordUseCase: ForgetPasswordUseCase
 ) : ForgetPasswordContract.ForgetPasswordPresenterInterface {
 
     private var isSuccess: Boolean = false

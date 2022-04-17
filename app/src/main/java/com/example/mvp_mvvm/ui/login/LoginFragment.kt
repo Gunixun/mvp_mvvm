@@ -30,7 +30,7 @@ class LoginFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        presenter = activity?.app?.let { LoginPresenter(it.loginUseCase) }
+        presenter = activity?.app?.let { LoginPresenter(it.loginDataSource) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

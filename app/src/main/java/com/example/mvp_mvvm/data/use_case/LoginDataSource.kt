@@ -4,21 +4,21 @@ import android.os.Handler
 import androidx.annotation.MainThread
 import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.domain.ILoginApi
-import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
+import com.example.mvp_mvvm.domain.usecase.LoginUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
-class ForgetPasswordUseCase(
+class LoginDataSource(
     private val api: ILoginApi,
     private val uiHandler: Handler
-) : IForgetPasswordUseCase {
-
-    override fun forgetPassword(
-        email: String,
+) : LoginUseCase {
+    override fun login(
+        login: String,
+        password: String,
         @MainThread callback: CallbackData<Account>
     ) {
         Thread {
             try {
-                val account = api.forgotPassword(email)
+                val account = api.login(login, password)
                 uiHandler.post {
                     callback.onSuccess(account)
                 }

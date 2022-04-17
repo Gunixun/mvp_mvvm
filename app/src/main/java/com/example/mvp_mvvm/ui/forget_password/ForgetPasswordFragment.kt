@@ -26,7 +26,7 @@ class ForgetPasswordFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordUseCase) }
+        presenter = activity?.app?.let { ForgetPasswordPresenter(it.forgetPasswordDataSource) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,11 +1,11 @@
 package com.example.mvp_mvvm.ui.registration
 
 import com.example.mvp_mvvm.domain.entities.Account
-import com.example.mvp_mvvm.domain.usecase.IRegistrationUseCase
+import com.example.mvp_mvvm.domain.usecase.RegistrationUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
 class RegistrationPresenter(
-    private val registrationUseCase: IRegistrationUseCase
+    private val registrationUseCase: RegistrationUseCase
 ) : RegistrationContract.RegistrationPresenterInterface {
 
     private var isSuccess: Boolean = false

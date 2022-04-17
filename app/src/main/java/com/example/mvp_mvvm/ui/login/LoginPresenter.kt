@@ -1,11 +1,11 @@
 package com.example.mvp_mvvm.ui.login
 
 import com.example.mvp_mvvm.domain.entities.Account
-import com.example.mvp_mvvm.domain.usecase.ILoginUseCase
+import com.example.mvp_mvvm.domain.usecase.LoginUseCase
 import com.example.mvp_mvvm.utils.CallbackData
 
 class LoginPresenter(
-    private val loginUseCase: ILoginUseCase
+    private val loginUseCase: LoginUseCase
 ) : LoginContract.LoginPresenterInterface {
 
     private var isSuccess: Boolean = false
