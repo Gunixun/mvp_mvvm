@@ -1,19 +1,12 @@
 package com.example.mvp_mvvm.ui.registration
 
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.ui.utils.AppState
+import com.example.mvp_mvvm.utils.Publisher
 
 class RegistrationContract {
-    interface RegistrationViewInterface {
-        fun showProgress()
-        fun hideProgress()
-        fun setSuccess()
-        fun showError(error: Exception)
-        fun loadAccountData(account: AccountEntity)
-    }
 
-    interface RegistrationPresenterInterface  {
-        fun onAttachView(view: RegistrationViewInterface)
+    interface ViewModel  {
+        fun getLiveData() : Publisher<AppState>
         fun onRegistration(login: String, password: String, email: String)
-        fun onDetach()
     }
 }

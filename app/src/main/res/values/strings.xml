@@ -15,6 +15,7 @@
     <string name="error_email_empty">Email не может быть пустым</string>
     <string name="success_sig_in">Авторизация прошла успешно</string>
     <string name="success_registration">Регистрация прошла успешно</string>
+    <string name="success_forget_password">Сброс пароля прошел успешно</string>
     <string name="unexpected_error_occurred">Непредвиденная ошибка</string>
     <string name="forgot_password_message">Введите логин или e-mail</string>
     <string name="restore">Восстановить</string>

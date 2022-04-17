@@ -2,42 +2,43 @@ package com.example.mvp_mvvm
 
 import android.app.Application
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import androidx.room.Room
 import com.example.mvp_mvvm.data.RoomLoginApi
-import com.example.mvp_mvvm.data.use_case.ForgetPasswordUseCase
-import com.example.mvp_mvvm.data.use_case.LoginUseCase
-import com.example.mvp_mvvm.data.use_case.RegistrationUseCase
-import com.example.mvp_mvvm.data.db.AccountsDAO
-import com.example.mvp_mvvm.data.db.AccountsDB
+import com.example.mvp_mvvm.data.use_cases.ForgetPasswordDataSource
+import com.example.mvp_mvvm.data.use_cases.LoginDataSource
+import com.example.mvp_mvvm.data.use_cases.RegistrationDataSource
+import com.example.mvp_mvvm.data.db.AccountsDao
+import com.example.mvp_mvvm.data.db.AccountsDb
 import com.example.mvp_mvvm.domain.ILoginApi
-import com.example.mvp_mvvm.domain.usecase.IForgetPasswordUseCase
-import com.example.mvp_mvvm.domain.usecase.ILoginUseCase
-import com.example.mvp_mvvm.domain.usecase.IRegistrationUseCase
+import com.example.mvp_mvvm.domain.use_cases.ForgetPasswordUseCase
+import com.example.mvp_mvvm.domain.use_cases.LoginUseCase
+import com.example.mvp_mvvm.domain.use_cases.RegistrationUseCase
 
 class App : Application() {
     private val loginApi: ILoginApi by lazy { RoomLoginApi(getAccountDao()) }
 
-    val loginUseCase: ILoginUseCase by lazy {
-        LoginUseCase(app.loginApi, Handler(Looper.getMainLooper()))
+    val loginDataSource: LoginUseCase by lazy {
+        LoginDataSource(app.loginApi)
     }
-    val registrationUseCase: IRegistrationUseCase by lazy {
-        RegistrationUseCase(app.loginApi, Handler(Looper.getMainLooper()))
+    val registrationDataSource: RegistrationUseCase by lazy {
+        RegistrationDataSource(app.loginApi)
     }
-    val forgetPasswordUseCase: IForgetPasswordUseCase by lazy {
-        ForgetPasswordUseCase(app.loginApi, Handler(Looper.getMainLooper()))
+    val forgetPasswordDataSource: ForgetPasswordUseCase by lazy {
+        ForgetPasswordDataSource(app.loginApi)
     }
 
     override fun onCreate() {
         super.onCreate()
-        db = Room.databaseBuilder(this, AccountsDB::class.java, "Accounts.db").build()
+        db = Room
+            .databaseBuilder(this, AccountsDb::class.java, "Accounts.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     companion object {
-        private var db: AccountsDB? = null
+        private var db: AccountsDb? = null
 
-        fun getAccountDao(): AccountsDAO {
+        fun getAccountDao(): AccountsDao {
             return db!!.accountDao()
         }
     }

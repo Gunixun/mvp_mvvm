@@ -2,21 +2,26 @@ package com.example.mvp_mvvm.ui.registration
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.mvp_mvvm.R
 import com.example.mvp_mvvm.app
 import com.example.mvp_mvvm.databinding.FragmentRegistrationBinding
-import com.example.mvp_mvvm.domain.entities.AccountEntity
+import com.example.mvp_mvvm.domain.entities.Account
+import com.example.mvp_mvvm.ui.utils.AppState
 import com.example.mvp_mvvm.ui.BaseFragment
+import com.example.mvp_mvvm.ui.utils.ViewState
 import com.example.mvp_mvvm.utils.*
 
 class RegistrationFragment :
-    BaseFragment<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate),
-    RegistrationContract.RegistrationViewInterface {
+    BaseFragment<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate) {
 
-    private var presenter: RegistrationContract.RegistrationPresenterInterface? = null
+    private val VIEW_STATE_KEY = "VIEW_STATE_KEY"
+    private var viewState: ViewState = ViewState.INIT
+    private var viewModel: RegistrationContract.ViewModel? = null
 
     companion object {
         fun newInstance() = RegistrationFragment()
@@ -24,17 +29,29 @@ class RegistrationFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
-        presenter = activity?.app?.let { RegistrationPresenter(it.registrationUseCase) }
+        viewModel = activity?.app?.let { RegistrationViewModel(it.registrationDataSource) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter?.onAttachView(this)
+        connectSignals()
+
+        savedInstanceState?.let {
+            viewState = ViewState.fromInt(
+                it.getInt(VIEW_STATE_KEY, 0)
+            )
+        }
+        restoreStateUi()
+    }
+
+    private fun connectSignals() {
+        viewModel?.getLiveData()?.subscribe(Handler(Looper.getMainLooper())) { state ->
+            renderData(state)
+        }
 
         binding.buttonCreate.setOnClickListener {
-            presenter?.onRegistration(
+            viewModel?.onRegistration(
                 binding.loginTextView.text.toString(),
                 binding.passwordTextView.text.toString(),
                 binding.emailTextView.text.toString(),
@@ -42,19 +59,22 @@ class RegistrationFragment :
         }
     }
 
-    override fun showProgress() {
-        binding.progress.isVisible = true
-    }
-
-    override fun hideProgress() {
+    private fun renderData(result: AppState) {
         binding.progress.isVisible = false
+        when (result) {
+            is AppState.Loading -> {
+                binding.progress.isVisible = true
+            }
+            is AppState.Success -> {
+                loadAccountData(result.account)
+            }
+            is AppState.Error -> {
+                showError(result.error)
+            }
+        }
     }
 
-    override fun setSuccess() {
-        binding.root.setBackgroundColor(Color.GREEN)
-    }
-
-    override fun showError(error: Exception) {
+    private fun showError(error: Exception) {
         val text = when (error) {
             is RegistrationException -> {
                 getString(R.string.error_registration)
@@ -72,16 +92,36 @@ class RegistrationFragment :
                 getString(R.string.unexpected_error_occurred) + error.toString()
             }
         }
+        viewState = ViewState.ERROR
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         binding.root.setBackgroundColor(Color.RED)
     }
 
-    override fun loadAccountData(account: AccountEntity) {
+    private fun loadAccountData(account: Account) {
+        viewState = ViewState.IS_SUCCESS
+        binding.root.setBackgroundColor(Color.GREEN)
         Toast.makeText(context, getString(R.string.success_registration), Toast.LENGTH_SHORT).show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.onDetach()
+    private fun restoreStateUi() {
+        when (viewState) {
+            ViewState.INIT -> {}
+            ViewState.ERROR -> {
+                binding.root.setBackgroundColor(Color.RED)
+            }
+            ViewState.IS_SUCCESS -> {
+                binding.root.setBackgroundColor(Color.GREEN)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(VIEW_STATE_KEY, viewState.value)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel?.getLiveData()?.unsubscribeAll()
     }
 }

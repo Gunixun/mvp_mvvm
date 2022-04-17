@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class AccountDTO(
+data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
     val uid: Int?,
     @ColumnInfo(name = "LOGIN")
