@@ -1,6 +1,6 @@
 package com.example.mvp_mvvm.ui.registration
 
-import com.example.mvp_mvvm.ui.AppState
+import com.example.mvp_mvvm.ui.utils.AppState
 import com.example.mvp_mvvm.utils.Publisher
 
 class RegistrationContract {

@@ -1,4 +1,4 @@
-package com.example.mvp_mvvm.ui
+package com.example.mvp_mvvm.ui.utils
 
 import com.example.mvp_mvvm.domain.entities.Account
 

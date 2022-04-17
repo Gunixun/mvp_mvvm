@@ -2,7 +2,7 @@ package com.example.mvp_mvvm.ui.login
 
 import com.example.mvp_mvvm.domain.entities.Account
 import com.example.mvp_mvvm.domain.use_cases.LoginUseCase
-import com.example.mvp_mvvm.ui.AppState
+import com.example.mvp_mvvm.ui.utils.AppState
 import com.example.mvp_mvvm.utils.CallbackData
 import com.example.mvp_mvvm.utils.Publisher
 
